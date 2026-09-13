@@ -68,11 +68,6 @@ public class ProductService {
 
 	private static final java.util.regex.Pattern ID_PATTERN = java.util.regex.Pattern.compile("^SP(\\d+)$");
 
-	/**
-	 * Sinh ma san pham tiep theo theo dinh dang "SP01", "SP02", ... dua tren
-	 * so lon nhat dang co trong bang (khong dung @GeneratedValue vi ID la
-	 * chuoi tuy bien, khong phai so tu tang).
-	 */
 	public String generateNextProductId() {
 		int max = 0;
 		for (Product p : productRepository.findAll()) {

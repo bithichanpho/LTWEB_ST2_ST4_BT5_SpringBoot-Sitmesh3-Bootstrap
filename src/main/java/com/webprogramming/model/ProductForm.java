@@ -10,7 +10,6 @@ import lombok.Data;
 @Data
 public class ProductForm {
 
-	// "SP01", "SP02",... duoc ProductAdminController tu sinh, khong nhap tay
 	private String productId;
 
 	@NotBlank(message = "Ten san pham khong duoc de trong")

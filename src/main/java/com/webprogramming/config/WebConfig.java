@@ -22,8 +22,6 @@ public class WebConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		// Checked in order: admin-uploaded images on disk first, then the
-		// sample images bundled with the app (src/main/resources/static/image).
 		registry.addResourceHandler("/image/**")
 				.addResourceLocations("file:" + uploadDir + "/", "classpath:/static/image/");
 
@@ -41,6 +39,8 @@ public class WebConfig implements WebMvcConfigurer {
 	    InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 	    resolver.setPrefix("/WEB-INF/views/");
 	    resolver.setSuffix(".jsp");
+	   // resolver.setAlwaysInclude(true);
+
 	    return resolver;
 	}
 }

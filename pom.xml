@@ -91,10 +91,13 @@
 
 		<!-- SiteMesh 3: page decoration (chung layout header/sidebar/footer) -->
 		<!-- Source: https://mvnrepository.com/artifact/org.sitemesh/sitemesh -->
+		<!-- Source:
+		https://mvnrepository.com/artifact/org.sitemesh/spring-boot-starter-sitemesh -->
 		<dependency>
 			<groupId>org.sitemesh</groupId>
-			<artifactId>sitemesh</artifactId>
-			<version>3.2.2</version>
+			<artifactId>spring-boot-starter-sitemesh</artifactId>
+			<version>3.3.0-RC1</version>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>jakarta.servlet.jsp.jstl</groupId>

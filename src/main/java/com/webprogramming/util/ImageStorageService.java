@@ -32,7 +32,6 @@ public class ImageStorageService {
 		Path target = targetDir.toPath().resolve(fileName);
 		Files.copy(file.getInputStream(), target, StandardCopyOption.REPLACE_EXISTING);
 
-		// Value stored in the DB / referenced by <img src="${ctx}/image/...">
 		return subFolder + "/" + fileName;
 	}
 }

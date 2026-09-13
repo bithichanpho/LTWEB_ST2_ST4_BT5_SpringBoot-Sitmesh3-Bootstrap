@@ -28,9 +28,6 @@ public interface IProductRepository extends JpaRepository<Product, String>{
 
 	Page<Product> findByProductNameContainingIgnoreCaseOrderByProductIdDesc(String keyword, Pageable pageable);
 
-	// Ma san pham co dinh dang "SPxx" -> sinh ma tiep theo dua tren toan bo
-	// danh sach (parse trong ProductService, an toan hon ORDER BY chuoi).
-
 	@Query("SELECT COALESCE(SUM(p.sold * p.price), 0) FROM Product p")
 	double sumRevenue();
 
