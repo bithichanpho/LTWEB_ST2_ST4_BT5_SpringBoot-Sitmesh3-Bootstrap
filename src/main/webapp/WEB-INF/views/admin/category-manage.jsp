@@ -1,4 +1,9 @@
-<%@ include file="/WEB-INF/common/head.jsp" %>
+<%@ include file="/WEB-INF/common/taglibs.jsp" %>
+<html>
+<head>
+<title>${pageTitle}</title>
+</head>
+<body>
 
 <c:if test="${not empty message}">
   <div class="alert-custom alert-custom-success mb-3">
@@ -9,10 +14,11 @@
 
 <div class="table-card-custom">
   <div class="table-header-control">
-    <div class="table-search-box">
+    <form action="${ctx}/admin/categories" method="get" class="table-search-box">
       <i class="bi bi-search table-search-icon"></i>
-      <input type="text" class="table-search-input" id="cateSearch" placeholder="Tim danh muc...">
-    </div>
+      <input type="text" name="keyword" class="table-search-input"
+        placeholder="Tim danh muc theo ten..." value="${keyword}">
+    </form>
     <div class="table-filter-group">
       <a href="${ctx}/admin/categories/add" class="btn-custom btn-custom-primary btn-custom-sm">
         <i class="bi bi-plus-lg"></i> Them danh muc
@@ -52,18 +58,17 @@
             </td>
           </tr>
         </c:forEach>
+        <c:if test="${empty cateList}">
+          <tr><td colspan="5" class="text-center text-muted-green py-3">Khong tim thay danh muc nao.</td></tr>
+        </c:if>
       </tbody>
     </table>
   </div>
+
+  <c:set var="pageObj" value="${catePage}" />
+  <c:set var="baseUrl" value="${ctx}/admin/categories" />
+  <%@ include file="/WEB-INF/common/pagination.jsp" %>
 </div>
 
-<script>
-  document.getElementById('cateSearch').addEventListener('input', function () {
-    var q = this.value.toLowerCase();
-    document.querySelectorAll('#cateTable tbody tr').forEach(function (row) {
-      row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
-    });
-  });
-</script>
-
-<%@ include file="/WEB-INF/common/foot.jspf" %>
+</body>
+</html>

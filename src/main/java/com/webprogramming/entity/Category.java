@@ -23,24 +23,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class Category {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "categoryId")
+	@Column(name = "category_id")
 	private int categoryId;
-	
-	@Column(name = "categoryName", columnDefinition = "NVARCHAR(255) NULL")
+
+	@Column(name = "category_name", columnDefinition = "NVARCHAR(255) NULL")
 	private String categoryName;
-	
+
 	@Column(name = "images", columnDefinition = "NVARCHAR(255) NULL")
 	private String images;
-	
+
 	@Column(name = "status")
 	private int status;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Product> products;
-	
+
 
 }

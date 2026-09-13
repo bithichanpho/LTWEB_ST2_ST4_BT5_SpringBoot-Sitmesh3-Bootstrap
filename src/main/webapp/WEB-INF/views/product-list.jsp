@@ -27,7 +27,12 @@
     </div>
   </c:forEach>
   <c:if test="${empty productList}">
-    <div class="col-12 text-center text-muted-green py-4">Chua co san pham nao.</div>
+    <div class="col-12 text-center text-muted-green py-4">
+      <c:choose>
+        <c:when test="${not empty keyword}">Khong tim thay san pham nao khop voi "${keyword}".</c:when>
+        <c:otherwise>Chua co san pham nao.</c:otherwise>
+      </c:choose>
+    </div>
   </c:if>
 </div>
 
@@ -36,7 +41,7 @@
     <ul class="pagination justify-content-center">
       <c:forEach begin="1" end="${totalPages}" var="i">
         <li class="page-item ${i == currentPage ? 'active' : ''}">
-          <a class="page-link" href="${ctx}/product?page=${i}">${i}</a>
+          <a class="page-link" href="${ctx}/product?page=${i}&keyword=${keyword}">${i}</a>
         </li>
       </c:forEach>
     </ul>

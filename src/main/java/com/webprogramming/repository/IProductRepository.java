@@ -15,29 +15,31 @@ import com.webprogramming.entity.Product;
 @Repository
 public interface IProductRepository extends JpaRepository<Product, String>{
 	Page<Product> findAllByOrderByProductIdDesc(Pageable pageable);
-	 
+
 	List<Product> findTop10ByOrderByCreatedAtDesc();
- 
+
 	long countByCategory_CategoryId(int categoryId);
- 
+
 	List<Product> findByCategory_CategoryIdOrderByProductIdDesc(int categoryId);
- 
+
 	Optional<Product> findByProductName(String productName);
- 
+
 	boolean existsByProductNameAndCategory_CategoryId(String productName, int categoryId);
+
+	Page<Product> findByProductNameContainingIgnoreCaseOrderByProductIdDesc(String keyword, Pageable pageable);
 
 	// Ma san pham co dinh dang "SPxx" -> sinh ma tiep theo dua tren toan bo
 	// danh sach (parse trong ProductService, an toan hon ORDER BY chuoi).
- 
+
 	@Query("SELECT COALESCE(SUM(p.sold * p.price), 0) FROM Product p")
 	double sumRevenue();
- 
+
 	@Query("SELECT COALESCE(SUM(p.sold), 0) FROM Product p")
 	long sumSold();
- 
+
 	@Query("SELECT COALESCE(SUM(p.sold * p.price), 0) FROM Product p WHERE p.category.categoryId = :categoryId")
 	double sumRevenueByCategory(@Param("categoryId") int categoryId);
- 
+
 	@Query("SELECT COALESCE(SUM(p.sold), 0) FROM Product p WHERE p.category.categoryId = :categoryId")
 	long sumSoldByCategory(@Param("categoryId") int categoryId);
 }

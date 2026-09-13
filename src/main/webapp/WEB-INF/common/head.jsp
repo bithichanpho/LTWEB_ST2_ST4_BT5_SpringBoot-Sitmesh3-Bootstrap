@@ -105,6 +105,11 @@
 							class="sidebar-menu-link ${activeMenu == 'admin-categories' ? 'active' : ''}">
 								<i class="bi bi-tags-fill"></i> <span>Quan ly danh muc</span>
 						</a></li>
+						<li class="sidebar-menu-item"><a href="${ctx}/admin/users"
+							class="sidebar-menu-link ${activeMenu == 'admin-users' ? 'active' : ''}">
+								<i class="bi bi-people-fill"></i> <span>Quan ly nguoi
+									dung</span>
+						</a></li>
 					</ul>
 				</div>
 			</c:if>
@@ -158,8 +163,8 @@
 
 			<div class="navbar-search-wrapper">
 				<form action="${ctx}/product" method="get" class="w-100 d-flex">
-					<input type="text" class="navbar-search-input"
-						placeholder="Tim kiem..." disabled>
+					<input type="text" class="navbar-search-input" name="keyword"
+						placeholder="Tim kiem..." value="${keyword}">
 				</form>
 			</div>
 
@@ -194,12 +199,11 @@
 			</div>
 		</header>
 
-		<c:if test="${not empty sessionScope.flashError}">
+		<c:if test="${not empty flashError}">
 			<div class="alert-custom alert-custom-danger mx-4 mt-3">
 				<i class="bi bi-exclamation-triangle-fill alert-custom-icon"></i>
-				<div class="alert-custom-content">${sessionScope.flashError}</div>
+				<div class="alert-custom-content">${flashError}</div>
 			</div>
-			<c:remove var="flashError" scope="session" />
 		</c:if>
 
 		<div class="page-header">

@@ -17,45 +17,51 @@ import com.webprogramming.repository.IProductRepository;
 public class ProductService {
 	@Autowired
 	private IProductRepository productRepository;
- 
+
 	public List<Product> findAll() {
 		return productRepository.findAll(Sort.by(Sort.Direction.DESC, "productId"));
 	}
- 
+
 	public Page<Product> findAll(int zeroBasedPage, int pageSize) {
 		Pageable pageable = PageRequest.of(zeroBasedPage, pageSize);
 		return productRepository.findAllByOrderByProductIdDesc(pageable);
 	}
- 
+
+	public Page<Product> search(String keyword, int zeroBasedPage, int pageSize) {
+		Pageable pageable = PageRequest.of(Math.max(zeroBasedPage, 0), pageSize);
+		String kw = keyword == null ? "" : keyword.trim();
+		return productRepository.findByProductNameContainingIgnoreCaseOrderByProductIdDesc(kw, pageable);
+	}
+
 	public List<Product> findLatest(int limit) {
 		List<Product> latest = productRepository.findTop10ByOrderByCreatedAtDesc();
 		return latest.size() > limit ? latest.subList(0, limit) : latest;
 	}
- 
+
 	public Optional<Product> findById(String id) {
 		return productRepository.findById(id);
 	}
- 
+
 	public List<Product> findByCategory(int categoryId) {
 		return productRepository.findByCategory_CategoryIdOrderByProductIdDesc(categoryId);
 	}
- 
+
 	public long countByCategory(int categoryId) {
 		return productRepository.countByCategory_CategoryId(categoryId);
 	}
- 
+
 	public long count() {
 		return productRepository.count();
 	}
- 
+
 	public Optional<Product> findByName(String name) {
 		return productRepository.findByProductName(name);
 	}
- 
+
 	public boolean existsByNameAndCategory(String name, int categoryId) {
 		return productRepository.existsByProductNameAndCategory_CategoryId(name, categoryId);
 	}
- 
+
 	public Product save(Product product) {
 		return productRepository.save(product);
 	}
@@ -77,23 +83,23 @@ public class ProductService {
 		}
 		return String.format("SP%02d", max + 1);
 	}
- 
+
 	public void deleteById(String id) {
 		productRepository.deleteById(id);
 	}
- 
+
 	public double sumRevenue() {
 		return productRepository.sumRevenue();
 	}
- 
+
 	public long sumSold() {
 		return productRepository.sumSold();
 	}
- 
+
 	public double sumRevenueByCategory(int categoryId) {
 		return productRepository.sumRevenueByCategory(categoryId);
 	}
- 
+
 	public long sumSoldByCategory(int categoryId) {
 		return productRepository.sumSoldByCategory(categoryId);
 	}

@@ -14,22 +14,22 @@ import com.webprogramming.service.ProductService;
 
 @ControllerAdvice
 public class NavDataAdvice {
- 
+
 	@Autowired
 	private CategoryService categoryService;
- 
+
 	@Autowired
 	private ProductService productService;
- 
+
 	@ModelAttribute
 	public void addNavData(Map<String, Object> model) {
 		List<Category> categories = categoryService.findAll();
- 
+
 		Map<Integer, Long> counts = new HashMap<>();
 		for (Category c : categories) {
 			counts.put(c.getCategoryId(), productService.countByCategory(c.getCategoryId()));
 		}
- 
+
 		model.put("navCategories", categories);
 		model.put("navCategoryCounts", counts);
 		model.put("navTotalProducts", productService.count());

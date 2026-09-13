@@ -1,4 +1,9 @@
-<%@ include file="/WEB-INF/common/head.jsp" %>
+<%@ include file="/WEB-INF/common/taglibs.jsp" %>
+<html>
+<head>
+<title>${pageTitle}</title>
+</head>
+<body>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <c:if test="${not empty message}">
@@ -44,4 +49,5 @@
   </form:form>
 </div>
 
-<%@ include file="/WEB-INF/common/foot.jsp" %>
+</body>
+</html>

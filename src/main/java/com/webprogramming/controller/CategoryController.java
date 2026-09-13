@@ -16,34 +16,34 @@ import com.webprogramming.service.ProductService;
 
 @Controller
 public class CategoryController {
- 
+
 	@Autowired
 	private CategoryService categoryService;
- 
+
 	@Autowired
 	private ProductService productService;
- 
+
 	@GetMapping("/categories")
 	public String list(ModelMap model) {
 		List<Category> list = categoryService.findAll();
- 
+
 		model.addAttribute("cateList", list);
 		model.addAttribute("pageTitle", "Danh muc");
 		model.addAttribute("activeMenu", "categories");
 		return "category-list";
 	}
- 
+
 	@GetMapping("/category/detail")
 	public String detail(ModelMap model, @RequestParam("id") int id) {
 		Optional<Category> optCategory = categoryService.findById(id);
- 
+
 		if (optCategory.isEmpty()) {
 			return "redirect:/categories";
 		}
- 
+
 		Category category = optCategory.get();
 		List<Product> products = productService.findByCategory(id);
- 
+
 		model.addAttribute("cate", category);
 		model.addAttribute("productList", products);
 		model.addAttribute("pageTitle", category.getCategoryName());

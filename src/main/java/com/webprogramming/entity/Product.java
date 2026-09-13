@@ -20,13 +20,11 @@ import lombok.NoArgsConstructor;
 @Data
 public class Product {
 
-	// Khong dung @GeneratedValue vi ID dang "SP01","SP02",... duoc sinh
-	// thu cong trong ProductService.generateNextProductId() truoc khi save.
 	@Id
-	@Column(name = "productId", length = 10)
+	@Column(name = "product_id", length = 10)
 	private String productId;
 
-	@Column(name = "productName", columnDefinition = "NVARCHAR(255) NULL")
+	@Column(name = "product_name", columnDefinition = "NVARCHAR(255) NULL")
 	private String productName;
 
 	@Column(name = "price")
@@ -44,11 +42,11 @@ public class Product {
 	@Column(name = "sold", columnDefinition = "INT NOT NULL DEFAULT 0")
 	private int sold;
 
-	@Column(name = "createdAt")
+	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "categoryId", nullable = false)
+	@JoinColumn(name = "category_id", nullable = false)
 	private Category category;
 
 	public double getRevenue() {

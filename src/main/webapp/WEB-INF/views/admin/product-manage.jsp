@@ -1,4 +1,9 @@
-<%@ include file="/WEB-INF/common/head.jsp" %>
+<%@ include file="/WEB-INF/common/taglibs.jsp" %>
+<html>
+<head>
+<title>${pageTitle}</title>
+</head>
+<body>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt"%>
 
 <c:if test="${not empty message}">
@@ -78,4 +83,5 @@
   });
 </script>
 
-<%@ include file="/WEB-INF/common/foot.jsp" %>
+</body>
+</html>

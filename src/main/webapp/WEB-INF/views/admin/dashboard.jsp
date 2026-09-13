@@ -1,5 +1,10 @@
-<%@ include file="/WEB-INF/common/head.jsp" %>
+<%@ include file="/WEB-INF/common/taglibs.jsp" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt"%>
+<html>
+<head>
+<title>${pageTitle}</title>
+</head>
+<body>
 
 <div class="row g-4 mb-1">
   <div class="col-md-3">
@@ -115,4 +120,5 @@
   }
 </script>
 
-<%@ include file="/WEB-INF/common/foot.jsp" %>
+</body>
+</html>

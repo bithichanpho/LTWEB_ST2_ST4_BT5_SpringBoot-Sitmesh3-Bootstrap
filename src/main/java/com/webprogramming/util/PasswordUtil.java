@@ -17,7 +17,7 @@ public class PasswordUtil {
 			throw new RuntimeException("Error hashing password", e);
 		}
 	}
- 
+
 	public static boolean checkPassword(String rawPassword, String hashedPassword) {
 		if (rawPassword == null || hashedPassword == null) {
 			return false;
