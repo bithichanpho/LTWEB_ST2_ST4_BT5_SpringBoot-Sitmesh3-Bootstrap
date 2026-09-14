@@ -112,6 +112,10 @@
 								<i class="bi bi-people-fill"></i> <span>Quan ly nguoi
 									dung</span>
 						</a></li>
+						<li class="sidebar-menu-item"><a href="${ctx}/admin/orders"
+							class="sidebar-menu-link ${activeMenu == 'admin-orders' ? 'active' : ''}">
+								<i class="bi bi-receipt-cutoff"></i> <span>Xu ly don hang</span>
+						</a></li>
 					</ul>
 				</div>
 			</c:if>

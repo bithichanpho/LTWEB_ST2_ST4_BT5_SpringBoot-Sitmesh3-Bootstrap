@@ -16,7 +16,7 @@
 <div class="card border-light shadow-sm p-4">
   <h5 class="card-title mb-4">Thong tin nguoi dung</h5>
 
-  <form:form modelAttribute="userForm" action="${ctx}/admin/users/saveOrUpdate" method="post">
+  <form:form acceptCharset="UTF-8" modelAttribute="userForm" action="${ctx}/admin/users/saveOrUpdate" method="post">
     <form:hidden path="isEdit" />
 
     <div class="row g-3">

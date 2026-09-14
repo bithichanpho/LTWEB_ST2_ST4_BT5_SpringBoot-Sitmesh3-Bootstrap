@@ -22,7 +22,7 @@
     </div>
   </div>
 
-  <form:form modelAttribute="product" action="${ctx}/admin/product/saveOrUpdate" method="post" enctype="multipart/form-data">
+  <form:form acceptCharset="UTF-8" modelAttribute="product" action="${ctx}/admin/product/saveOrUpdate" method="post" enctype="multipart/form-data">
     <form:hidden path="isEdit" />
     <form:hidden path="productId" />
 

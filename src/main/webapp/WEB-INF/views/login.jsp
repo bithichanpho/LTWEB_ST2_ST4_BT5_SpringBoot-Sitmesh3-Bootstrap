@@ -41,7 +41,7 @@
         </div>
       </c:if>
 
-      <form:form modelAttribute="loginForm" action="${ctx}/login" method="post" id="loginForm">
+      <form:form acceptCharset="UTF-8" modelAttribute="loginForm" action="${ctx}/login" method="post" id="loginForm">
         <div class="login-form-group">
           <label for="email" class="login-form-label">Email</label>
           <div class="login-input-group">

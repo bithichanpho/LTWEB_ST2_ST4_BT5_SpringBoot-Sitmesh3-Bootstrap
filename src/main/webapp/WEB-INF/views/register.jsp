@@ -28,7 +28,7 @@
 
       <p class="login-subtitle">Tao tai khoan moi</p>
 
-      <form:form modelAttribute="registerForm" action="${ctx}/register" method="post" id="registerForm">
+      <form:form acceptCharset="UTF-8" modelAttribute="registerForm" action="${ctx}/register" method="post" id="registerForm">
         <div class="login-form-group">
           <label for="fullname" class="login-form-label">Ho ten</label>
           <div class="login-input-group">

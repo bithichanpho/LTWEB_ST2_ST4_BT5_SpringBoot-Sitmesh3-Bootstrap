@@ -19,7 +19,7 @@
     <h5 class="card-title mb-0">Sua danh muc</h5>
   </div>
 
-  <form:form modelAttribute="category" action="${ctx}/admin/categories/saveOrUpdate" method="post" enctype="multipart/form-data">
+  <form:form acceptCharset="UTF-8" modelAttribute="category" action="${ctx}/admin/categories/saveOrUpdate" method="post" enctype="multipart/form-data">
     <form:hidden path="isEdit" />
     <form:hidden path="categoryId" />
 

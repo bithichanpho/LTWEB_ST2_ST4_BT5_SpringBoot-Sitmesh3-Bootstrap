@@ -16,7 +16,7 @@
 <div class="card border-light shadow-sm p-4">
   <h5 class="card-title mb-4">Thong tin danh muc</h5>
 
-  <form:form modelAttribute="category" action="${ctx}/admin/categories/saveOrUpdate" method="post" enctype="multipart/form-data">
+  <form:form acceptCharset="UTF-8" modelAttribute="category" action="${ctx}/admin/categories/saveOrUpdate" method="post" enctype="multipart/form-data">
     <form:hidden path="isEdit" />
 
     <div class="row g-3">

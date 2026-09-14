@@ -66,6 +66,17 @@
 								<i class="bi bi-grid-fill"></i> <span>Dashboard</span>
 						</a></li>
 					</c:if>
+					<c:if test="${not empty currentUser}">
+						<li class="sidebar-menu-item"><a href="${ctx}/cart"
+							class="sidebar-menu-link ${activeMenu == 'cart' ? 'active' : ''}">
+								<i class="bi bi-cart3"></i> <span>Gio hang</span> <span
+								class="sidebar-menu-badge">${navCartCount}</span>
+						</a></li>
+						<li class="sidebar-menu-item"><a href="${ctx}/order/history"
+							class="sidebar-menu-link ${activeMenu == 'order-history' ? 'active' : ''}">
+								<i class="bi bi-receipt"></i> <span>Don hang cua toi</span>
+						</a></li>
+					</c:if>
 				</ul>
 			</div>
 
@@ -109,6 +120,10 @@
 							class="sidebar-menu-link ${activeMenu == 'admin-users' ? 'active' : ''}">
 								<i class="bi bi-people-fill"></i> <span>Quan ly nguoi
 									dung</span>
+						</a></li>
+						<li class="sidebar-menu-item"><a href="${ctx}/admin/orders"
+							class="sidebar-menu-link ${activeMenu == 'admin-orders' ? 'active' : ''}">
+								<i class="bi bi-receipt-cutoff"></i> <span>Xu ly don hang</span>
 						</a></li>
 					</ul>
 				</div>
