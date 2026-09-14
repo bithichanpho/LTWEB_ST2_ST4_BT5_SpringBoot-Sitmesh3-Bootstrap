@@ -45,6 +45,7 @@ public class UserService {
 
 	public Optional<User> authenticate(String email, String rawPassword) {
 		return userRepository.findByEmail(email)
+				.filter(u -> u.getStatus() == 1)
 				.filter(u -> PasswordUtil.checkPassword(rawPassword, u.getPassword()));
 	}
 }

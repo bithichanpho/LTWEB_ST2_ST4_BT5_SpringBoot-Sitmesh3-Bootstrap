@@ -153,8 +153,13 @@ public class ProductAdminController {
 	}
 
 	@GetMapping("/product/delete/{id}")
-	public String delete(@PathVariable("id") String id) {
-		productService.deleteById(id);
+	public String delete(RedirectAttributes redirectAttributes, @PathVariable("id") String id) {
+		try {
+			productService.deleteById(id);
+			redirectAttributes.addFlashAttribute("message", "Xoa san pham thanh cong!");
+		} catch (IllegalStateException ex) {
+			redirectAttributes.addFlashAttribute("flashError", ex.getMessage());
+		}
 		return "redirect:/admin/products";
 	}
 }

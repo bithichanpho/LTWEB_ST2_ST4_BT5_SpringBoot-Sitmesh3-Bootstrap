@@ -17,6 +17,10 @@ import com.webprogramming.service.ProductService;
 
 @Controller
 public class DashboardController {
+	@Autowired
+	private com.webprogramming.repository.IOrderRepository orderRepository;
+	@Autowired
+	private com.webprogramming.repository.IOrderDetailRepository detailRepository;
 
 	@Autowired
 	private ProductService productService;
@@ -31,7 +35,8 @@ public class DashboardController {
 
 		double totalRevenue = productService.sumRevenue();
 		long totalSold = productService.sumSold();
-		double avgOrderValue = products.isEmpty() ? 0 : totalRevenue / products.size();
+		long completedCount = orderRepository.countByStatus("COMPLETED");
+		double avgOrderValue = completedCount == 0 ? 0 : totalRevenue / completedCount;
 
 		List<CategoryStat> categoryStats = new ArrayList<>();
 		for (Category c : categories) {
@@ -44,8 +49,15 @@ public class DashboardController {
 		categoryStats.sort(Comparator.comparingDouble(CategoryStat::getTotalRevenue).reversed());
 		CategoryStat topCategory = categoryStats.isEmpty() ? null : categoryStats.get(0);
 
-		List<Product> topProducts = new ArrayList<>(products);
-		topProducts.sort(Comparator.comparingDouble(Product::getRevenue).reversed());
+		java.util.Map<String, Product> byId = new java.util.HashMap<>();
+		products.forEach(p -> byId.put(p.getProductId(), p));
+		List<com.webprogramming.model.ProductSales> topProducts = new ArrayList<>();
+		for (Object[] row : detailRepository.completedProductSales()) {
+			Product p = byId.get((String) row[0]);
+			if (p != null) topProducts.add(new com.webprogramming.model.ProductSales(
+				p.getProductId(), p.getProductName(), ((Number) row[1]).longValue(), ((Number) row[2]).doubleValue()));
+		}
+		topProducts.sort(Comparator.comparingDouble(com.webprogramming.model.ProductSales::getRevenue).reversed());
 		if (topProducts.size() > 5) {
 			topProducts = topProducts.subList(0, 5);
 		}

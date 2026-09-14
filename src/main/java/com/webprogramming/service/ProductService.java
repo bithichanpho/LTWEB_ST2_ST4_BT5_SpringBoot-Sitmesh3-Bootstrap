@@ -11,12 +11,16 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.webprogramming.entity.Product;
+import com.webprogramming.repository.IOrderDetailRepository;
 import com.webprogramming.repository.IProductRepository;
 
 @Service
 public class ProductService {
 	@Autowired
 	private IProductRepository productRepository;
+
+	@Autowired
+	private IOrderDetailRepository orderDetailRepository;
 
 	public List<Product> findAll() {
 		return productRepository.findAll(Sort.by(Sort.Direction.DESC, "productId"));
@@ -79,7 +83,18 @@ public class ProductService {
 		return String.format("SP%02d", max + 1);
 	}
 
+	// San pham da nam trong 1 don hang nao thi khong duoc xoa cung (se vi pham khoa ngoai
+	// o DB, gay loi 500). Nhan vien nen "an" san pham (het hang / ngung ban) thay vi xoa.
+	public boolean isReferencedByOrder(String productId) {
+		return orderDetailRepository.existsByProduct_ProductId(productId);
+	}
+
 	public void deleteById(String id) {
+		if (isReferencedByOrder(id)) {
+			throw new IllegalStateException(
+					"San pham nay da nam trong don hang cua khach, khong the xoa. "
+							+ "Ban co the sua so luong ve 0 de ngung ban thay vi xoa.");
+		}
 		productRepository.deleteById(id);
 	}
 

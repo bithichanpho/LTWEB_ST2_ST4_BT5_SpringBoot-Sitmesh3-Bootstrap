@@ -66,7 +66,15 @@ public class OrderController {
 
 		try {
 			Order order = orderService.placeOrder(user, recipientName, phone, address, note, paymentMethod);
-			redirectAttributes.addFlashAttribute("message", "Dat hang thanh cong! Ma don hang: #" + order.getOrderId());
+
+			if (Order.PAYMENT_BANKING.equals(order.getPaymentMethod())) {
+				redirectAttributes.addFlashAttribute("message",
+						"Tao don hang thanh cong. Vui long thanh toan online de hoan tat don.");
+				return "redirect:/order/payment/" + order.getOrderId();
+			}
+
+			redirectAttributes.addFlashAttribute("message",
+					"Dat hang thanh cong! Ma don hang: #" + order.getOrderId());
 			return "redirect:/order/detail/" + order.getOrderId();
 		} catch (IllegalStateException | IllegalArgumentException ex) {
 			redirectAttributes.addFlashAttribute("flashError", ex.getMessage());

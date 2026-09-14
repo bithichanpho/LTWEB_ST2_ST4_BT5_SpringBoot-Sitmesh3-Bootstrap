@@ -79,15 +79,4 @@ public class OrderAdminController {
 		return "redirect:/admin/order/detail/" + orderId;
 	}
 
-	// Xac nhan da thu tien (vd: chuyen khoan) cho don hang
-	@PostMapping("/order/markPaid")
-	public String markPaid(RedirectAttributes redirectAttributes, @RequestParam("orderId") int orderId) {
-		try {
-			orderService.markPaid(orderId);
-			redirectAttributes.addFlashAttribute("message", "Da xac nhan thanh toan don hang");
-		} catch (IllegalArgumentException ex) {
-			redirectAttributes.addFlashAttribute("flashError", ex.getMessage());
-		}
-		return "redirect:/admin/order/detail/" + orderId;
-	}
 }

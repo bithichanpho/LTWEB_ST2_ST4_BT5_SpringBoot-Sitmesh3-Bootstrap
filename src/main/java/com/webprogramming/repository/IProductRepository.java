@@ -28,15 +28,15 @@ public interface IProductRepository extends JpaRepository<Product, String>{
 
 	Page<Product> findByProductNameContainingIgnoreCaseOrderByProductIdDesc(String keyword, Pageable pageable);
 
-	@Query("SELECT COALESCE(SUM(p.sold * p.price), 0) FROM Product p")
+	@Query("SELECT COALESCE(SUM(d.quantity * d.price), 0) FROM OrderDetail d WHERE d.order.status = 'COMPLETED'")
 	double sumRevenue();
 
-	@Query("SELECT COALESCE(SUM(p.sold), 0) FROM Product p")
+	@Query("SELECT COALESCE(SUM(d.quantity), 0) FROM OrderDetail d WHERE d.order.status = 'COMPLETED'")
 	long sumSold();
 
-	@Query("SELECT COALESCE(SUM(p.sold * p.price), 0) FROM Product p WHERE p.category.categoryId = :categoryId")
+	@Query("SELECT COALESCE(SUM(d.quantity * d.price), 0) FROM OrderDetail d WHERE d.order.status = 'COMPLETED' AND d.product.category.categoryId = :categoryId")
 	double sumRevenueByCategory(@Param("categoryId") int categoryId);
 
-	@Query("SELECT COALESCE(SUM(p.sold), 0) FROM Product p WHERE p.category.categoryId = :categoryId")
+	@Query("SELECT COALESCE(SUM(d.quantity), 0) FROM OrderDetail d WHERE d.order.status = 'COMPLETED' AND d.product.category.categoryId = :categoryId")
 	long sumSoldByCategory(@Param("categoryId") int categoryId);
 }

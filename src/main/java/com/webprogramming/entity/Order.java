@@ -39,6 +39,10 @@ public class Order {
 	public static final String PAYMENT_COD = "COD";
 	public static final String PAYMENT_BANKING = "BANKING";
 
+	public static final String PAYMENT_STATUS_UNPAID = "UNPAID";
+	public static final String PAYMENT_STATUS_PAID = "PAID";
+	public static final String PAYMENT_STATUS_FAILED = "FAILED";
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "order_id")
@@ -64,6 +68,19 @@ public class Order {
 
 	@Column(name = "paid")
 	private boolean paid = false;
+
+	@Column(name = "payment_status", length = 20)
+	private String paymentStatus = PAYMENT_STATUS_UNPAID;
+
+	// Danh dau da tru ton kho hay chua de tranh tru/hoan kho hai lan.
+	@Column(name = "stock_deducted")
+	private Boolean stockDeducted = false;
+
+	// Don cu co the co stock_deducted = NULL. Giu NULL khi doc database;
+	// OrderService.restoreStock van xu ly don cu dua tren paymentStatus.
+	public boolean isStockDeducted() {
+		return Boolean.TRUE.equals(stockDeducted);
+	}
 
 	@Column(name = "recipient_name", columnDefinition = "NVARCHAR(255) NULL")
 	private String recipientName;

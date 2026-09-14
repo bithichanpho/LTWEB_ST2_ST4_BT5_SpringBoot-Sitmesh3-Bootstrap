@@ -11,12 +11,30 @@ import com.webprogramming.entity.Cart;
 import com.webprogramming.entity.CartItem;
 import com.webprogramming.entity.Product;
 import com.webprogramming.entity.User;
+import com.webprogramming.entity.OrderDetail;
 import com.webprogramming.repository.ICartItemRepository;
 import com.webprogramming.repository.ICartRepository;
 import com.webprogramming.repository.IProductRepository;
 
 @Service
 public class CartService {
+	@Autowired
+	private jakarta.persistence.EntityManager entityManager;
+
+	@Transactional
+	public void removePurchasedItems(User user, List<OrderDetail> details) {
+		for (OrderDetail detail : details) {
+			if (detail.getSourceCartItemId() == null) continue;
+			cartItemRepository.findById(detail.getSourceCartItemId()).ifPresent(item -> {
+				entityManager.lock(item, jakarta.persistence.LockModeType.PESSIMISTIC_WRITE);
+				entityManager.refresh(item);
+				if (item.getCart().getUser().getUserId() != user.getUserId()) return;
+				int remaining = item.getQuantity() - detail.getQuantity();
+				if (remaining <= 0) cartItemRepository.delete(item);
+				else { item.setQuantity(remaining); cartItemRepository.save(item); }
+			});
+		}
+	}
 
 	@Autowired
 	private ICartRepository cartRepository;

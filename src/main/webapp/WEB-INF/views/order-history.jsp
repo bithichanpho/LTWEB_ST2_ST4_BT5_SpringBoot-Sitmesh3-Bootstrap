@@ -22,14 +22,15 @@
             <td class="table-amount"><fmt:formatNumber value="${o.totalAmount}" type="number" groupingUsed="true" /> d</td>
             <td>
               <c:choose>
-                <c:when test="${o.paid}"><span class="badge-table success">Da thanh toan</span></c:when>
+                <c:when test="${o.paymentStatus == 'PAID' or o.paid}"><span class="badge-table success">Da thanh toan</span></c:when>
+                <c:when test="${o.paymentStatus == 'FAILED'}"><span class="badge-table failed">Thanh toan that bai</span></c:when>
                 <c:otherwise><span class="badge-table pending">Chua thanh toan</span></c:otherwise>
               </c:choose>
             </td>
             <td>
               <c:choose>
                 <c:when test="${o.status == 'PENDING'}"><span class="badge-table pending">Cho xac nhan</span></c:when>
-                <c:when test="${o.status == 'CONFIRMED'}"><span class="badge-table pending">Da xac nhan</span></c:when>
+                <c:when test="${o.status == 'CONFIRMED'}"><span class="badge-table success">Da xac nhan</span></c:when>
                 <c:when test="${o.status == 'SHIPPING'}"><span class="badge-table pending">Dang giao</span></c:when>
                 <c:when test="${o.status == 'COMPLETED'}"><span class="badge-table success">Hoan thanh</span></c:when>
                 <c:when test="${o.status == 'CANCELLED'}"><span class="badge-table failed">Da huy</span></c:when>

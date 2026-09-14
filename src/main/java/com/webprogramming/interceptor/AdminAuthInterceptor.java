@@ -11,6 +11,8 @@ import jakarta.servlet.http.HttpSession;
 
 @Component
 public class AdminAuthInterceptor implements HandlerInterceptor {
+	@org.springframework.beans.factory.annotation.Autowired
+	private com.webprogramming.service.UserService userService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -23,7 +25,14 @@ public class AdminAuthInterceptor implements HandlerInterceptor {
 			response.sendRedirect(request.getContextPath() + "/login");
 			return false;
 		}
-		if (!"admin".equals(currentUser.getRole())) {
+		User freshUser = userService.findById(currentUser.getUserId()).orElse(null);
+		if (freshUser == null || freshUser.getStatus() != 1) {
+			session.invalidate();
+			response.sendRedirect(request.getContextPath() + "/login");
+			return false;
+		}
+		session.setAttribute("currentUser", freshUser);
+		if (!"admin".equals(freshUser.getRole())) {
 			response.sendRedirect(request.getContextPath() + "/home");
 			return false;
 		}

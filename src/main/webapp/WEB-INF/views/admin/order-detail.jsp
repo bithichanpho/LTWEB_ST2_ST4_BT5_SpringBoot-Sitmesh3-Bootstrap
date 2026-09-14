@@ -71,7 +71,7 @@
         Trang thai hien tai:
         <c:choose>
           <c:when test="${order.status == 'PENDING'}"><span class="badge-table pending">Cho xac nhan</span></c:when>
-          <c:when test="${order.status == 'CONFIRMED'}"><span class="badge-table pending">Da xac nhan</span></c:when>
+          <c:when test="${order.status == 'CONFIRMED'}"><span class="badge-table success">Da xac nhan</span></c:when>
           <c:when test="${order.status == 'SHIPPING'}"><span class="badge-table pending">Dang giao</span></c:when>
           <c:when test="${order.status == 'COMPLETED'}"><span class="badge-table success">Hoan thanh</span></c:when>
           <c:when test="${order.status == 'CANCELLED'}"><span class="badge-table failed">Da huy</span></c:when>
@@ -80,9 +80,11 @@
       <div class="mb-3">
         Thanh toan:
         <c:choose>
-          <c:when test="${order.paid}"><span class="badge-table success">Da thanh toan</span></c:when>
+          <c:when test="${order.paymentStatus == 'PAID' or order.paid}"><span class="badge-table success">Da thanh toan</span></c:when>
+          <c:when test="${order.paymentStatus == 'FAILED'}"><span class="badge-table failed">Thanh toan that bai</span></c:when>
           <c:otherwise><span class="badge-table pending">Chua thanh toan</span></c:otherwise>
         </c:choose>
+        (<c:out value="${order.paymentMethod == 'COD' ? 'COD' : 'Chuyen khoan'}" />)
       </div>
 
       <c:if test="${order.status != 'COMPLETED' && order.status != 'CANCELLED'}">
@@ -106,12 +108,6 @@
               <input type="hidden" name="orderId" value="${order.orderId}">
               <input type="hidden" name="status" value="COMPLETED">
               <button type="submit" class="btn-custom btn-custom-primary w-100">Xac nhan da giao xong</button>
-            </form>
-          </c:if>
-          <c:if test="${not order.paid}">
-            <form action="${ctx}/admin/order/markPaid" method="post">
-              <input type="hidden" name="orderId" value="${order.orderId}">
-              <button type="submit" class="btn-custom btn-custom-outline-primary w-100">Xac nhan da thanh toan</button>
             </form>
           </c:if>
           <form action="${ctx}/admin/order/updateStatus" method="post"

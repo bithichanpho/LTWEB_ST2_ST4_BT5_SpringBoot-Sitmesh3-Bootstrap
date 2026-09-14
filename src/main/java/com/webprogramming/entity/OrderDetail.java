@@ -20,6 +20,10 @@ import lombok.NoArgsConstructor;
 @Data
 public class OrderDetail {
 
+	// Snapshot cua dong gio hang; NULL cho don cu, khong xoa gio hang moi.
+	@Column(name = "source_cart_item_id")
+	private Integer sourceCartItemId;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "order_detail_id")

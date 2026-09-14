@@ -52,11 +52,18 @@
       <div class="mb-3">
         Thanh toan:
         <c:choose>
-          <c:when test="${order.paid}"><span class="badge-table success">Da thanh toan</span></c:when>
+          <c:when test="${order.paymentStatus == 'PAID' or order.paid}"><span class="badge-table success">Da thanh toan</span></c:when>
+          <c:when test="${order.paymentStatus == 'FAILED'}"><span class="badge-table failed">Thanh toan that bai</span></c:when>
           <c:otherwise><span class="badge-table pending">Chua thanh toan</span></c:otherwise>
         </c:choose>
         (<c:out value="${order.paymentMethod == 'COD' ? 'Thanh toan khi nhan hang' : 'Chuyen khoan'}" />)
       </div>
+
+      <c:if test="${order.paymentMethod == 'BANKING' and not order.paid and order.status != 'CANCELLED' and order.status != 'COMPLETED'}">
+        <a href="${ctx}/order/payment/${order.orderId}" class="btn-custom btn-custom-primary w-100">
+          <i class="bi bi-credit-card"></i> Thanh toan online
+        </a>
+      </c:if>
 
       <hr>
       <div class="mb-1"><strong>Nguoi nhan:</strong> ${order.recipientName}</div>
